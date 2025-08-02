@@ -19,13 +19,14 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
-    """Upgrade schema."""
+    """Upgrade schema. use command alembic upgrade 188bebad346c  to apply this migration.""" 
     op.add_column(
         'users',
         sa.Column('phone_number', sa.String(), nullable=True))
-    pass
 
 
 def downgrade() -> None:
-    """Downgrade schema."""
-    pass
+    """Downgrade schema. used command 'alembic downgrade -1' to revert the last migration."""
+    op.drop_column('users', 'phone_number')
+    # Note: Downgrading will remove the phone_number column from the users table.
+    # Ensure that this is acceptable for your application logic before applying this migration.
