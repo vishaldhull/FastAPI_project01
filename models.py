@@ -13,7 +13,7 @@ class Users(Base):
     hashed_password = Column(String)
     role = Column(String)  # Default role can be 'user', 'admin', etc.
     is_active = Column(Boolean, default=True)
-    phone_number = Column(String)  # Optional field for phone number
+    phone_number = Column(String)
 
     def __repr__(self):
         return f"<User id={self.id} username={self.username}>"

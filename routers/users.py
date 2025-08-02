@@ -48,4 +48,22 @@ async def update_password(user: user_dependency, db: db_dependency, user_verific
     user_model.hashed_password = bcrypt_context.hash(user_verification.new_password)
     db.add(user_model)
     db.commit()
-    return
+
+
+@router.put("/phonenumber/{phone_number}", status_code=status.HTTP_204_NO_CONTENT)
+async def update_phone_number(
+    user: user_dependency, 
+    db: db_dependency, 
+    phone_number: str
+):
+    if user is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated")
+    
+    user_model = db.query(Users).filter(Users.id == user.get('id')).first()
+    if not user_model:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    user_model.phone_number = phone_number
+    db.add(user_model)
+    db.commit()
+    return {"message": "Phone number updated successfully"}
