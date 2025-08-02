@@ -24,8 +24,8 @@ class Todos(Base):
     title = Column(String)
     description = Column(String)
     priority = Column(Integer)
-    completed = Column(Boolean, default=False)
+    complete = Column(Boolean, default=False)
     owner_id = Column(Integer, ForeignKey("users.id"))
 
     def __repr__(self):
-        return f"<Todo id={self.id} title={self.title} completed={self.completed}>"
+        return f"<Todo id={self.id} title={self.title} complete={self.complete}>"

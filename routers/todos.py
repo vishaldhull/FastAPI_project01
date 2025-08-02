@@ -26,7 +26,7 @@ class TodoRequest(BaseModel):
     title: str = Field(min_length=3, max_length=100)
     description: str = Field(min_length=3, max_length=500)
     priority: int = Field(gt=0, le=5)
-    completed: bool
+    complete: bool
 
 
 @router.get("/", status_code=status.HTTP_200_OK)
@@ -54,7 +54,7 @@ async def create_todo(user: user_dependency, todo: TodoRequest, db: db_dependenc
         title=todo.title,
         description=todo.description,
         priority=todo.priority,
-        completed=todo.completed,
+        complete=todo.complete,
         owner_id=user['id']  # Assuming user is a dict with 'id' key
     )
     db.add(todo_model)
@@ -75,7 +75,7 @@ async def update_todo(user: user_dependency, db: db_dependency, todo: TodoReques
     todo_model.title = todo.title
     todo_model.description = todo.description
     todo_model.priority = todo.priority
-    todo_model.completed = todo.completed
+    todo_model.complete = todo.complete
     
     db.add(todo_model)
     db.commit()
